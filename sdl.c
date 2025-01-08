@@ -37,11 +37,11 @@ int sdl_init(const char* title, int w, int h)
 	
 	return 0;
 }
-int sdl_init_font(const char* fn)
+int sdl_init_font(const char* fn, int pt_size)
 {
 
 	if ( TTF_Init() != 0 ) { puts(SDL_GetError()); return -1; }
-	TTF_Font* font = TTF_OpenFont("assets/GenericMobileSystemNuevo.ttf", 16);
+	TTF_Font* font = TTF_OpenFont(fn, pt_size);
 	if ( font == NULL ) { puts(SDL_GetError()); return -1; }
 	for ( int i = 0; i < 0xFF; i++ )
 	{

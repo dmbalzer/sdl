@@ -6,7 +6,7 @@
 #include <stdbool.h>
 
 int sdl_init(const char* title, int w, int h);
-int sdl_init_font(const char* fn);
+int sdl_init_font(const char* fn, int pt_size);
 void sdl_process_events(void);
 void sdl_begin_drawing(void);
 void sdl_end_drawing(void);
