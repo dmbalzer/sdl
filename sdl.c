@@ -65,7 +65,7 @@ void sdl_process_events(void)
 		switch ( event.type )
 		{
 			case SDL_QUIT: quit = true; break;
-			case SDL_MOUSEBUTTONDOWN: mouse_pressed |= event.button.button; break;
+			case SDL_MOUSEBUTTONDOWN: mouse_pressed |= SDL_BUTTON(event.button.button); break;
 		}
 	}
 }
