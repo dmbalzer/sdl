@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 int sdl_init(const char* title, int w, int h);
+int sdl_init_font(const char* fn);
 void sdl_process_events(void);
 void sdl_begin_drawing(void);
 void sdl_end_drawing(void);
@@ -17,5 +18,6 @@ void sdl_unload_texture(SDL_Texture* t);
 void sdl_blit(SDL_Texture* t, int x, int y);
 SDL_Point sdl_get_mouse_pos(void);
 bool sdl_is_mouse_pressed(int button);
+void sdl_blit_text(const char* text, int x, int y);
 
 #endif // SDL_INCLUDED

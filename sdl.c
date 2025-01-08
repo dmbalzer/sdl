@@ -1,5 +1,6 @@
 #include "sdl.h"
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 
 static SDL_Window* window = NULL;
@@ -7,6 +8,7 @@ static SDL_Renderer* renderer = NULL;
 static bool quit = false;
 static SDL_Color clear_color = (SDL_Color){ 0,0,0,255 };
 static Uint32 mouse_pressed = 0;
+static SDL_Texture* glyphs[0xFF] = { 0 };
 
 int sdl_init(const char* title, int w, int h)
 {
@@ -31,7 +33,24 @@ int sdl_init(const char* title, int w, int h)
 	if ( renderer == NULL ) { puts(SDL_GetError()); return -1; }
 
 	if ( IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) == 0 ) { puts(SDL_GetError()); return -1; }
+	
+	
+	return 0;
+}
+int sdl_init_font(const char* fn)
+{
 
+	if ( TTF_Init() != 0 ) { puts(SDL_GetError()); return -1; }
+	TTF_Font* font = TTF_OpenFont("assets/GenericMobileSystemNuevo.ttf", 16);
+	if ( font == NULL ) { puts(SDL_GetError()); return -1; }
+	for ( int i = 0; i < 0xFF; i++ )
+	{
+		SDL_Surface* s = TTF_RenderGlyph32_Solid(font, i, (SDL_Color){ 0xFF, 0xFF, 0xFF, 0xFF });
+		if ( s != NULL ) glyphs[i] = SDL_CreateTextureFromSurface(renderer, s);
+		if ( glyphs[i] == NULL ) { puts(SDL_GetError()); }
+		SDL_FreeSurface(s);
+	}
+	TTF_CloseFont(font);
 	return 0;
 }
 
@@ -68,6 +87,8 @@ void sdl_end_drawing(void)
 
 void sdl_unload(void)
 {
+	for ( int i = 0; i < 0xFF; i++ ) SDL_DestroyTexture(glyphs[i]);
+	TTF_Quit();
 	IMG_Quit();
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
@@ -111,4 +132,19 @@ SDL_Point sdl_get_mouse_pos(void)
 bool sdl_is_mouse_pressed(int button)
 {
 	return mouse_pressed & SDL_BUTTON(button);
+}
+
+void sdl_blit_text(const char* text, int x, int y)
+{
+	int i = 0;
+	char c = 0;
+	do
+	{
+		c = text[i++];
+		sdl_blit(glyphs[(int)c], x, y);
+		int w;
+		SDL_QueryTexture(glyphs[(int)c], NULL, NULL, &w, NULL);
+		x+=w;	
+	}
+	while ( c != '\0' );
 }
