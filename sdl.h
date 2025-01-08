@@ -71,6 +71,7 @@ int sdl_init_font(const char* fn, int pt_size)
 	if ( font == NULL ) { puts(SDL_GetError()); return -1; }
 	for ( int i = 0; i < 0xFF; i++ )
 	{
+		if ( !TTF_GlyphIsProvided32(font, i) ) continue;
 		SDL_Surface* s = TTF_RenderGlyph32_Solid(font, i, (SDL_Color){ 0xFF, 0xFF, 0xFF, 0xFF });
 		if ( s != NULL ) glyphs[i] = SDL_CreateTextureFromSurface(renderer, s);
 		if ( glyphs[i] == NULL ) { puts(SDL_GetError()); }
