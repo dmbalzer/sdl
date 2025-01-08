@@ -21,6 +21,7 @@ bool sdl_is_mouse_pressed(int button);
 void sdl_draw_text(const char* text, int x, int y);
 float sdl_get_frametime(void);
 void sdl_draw_rect(SDL_Rect r, SDL_Color c);
+void sdl_draw_rect_lines(SDL_Rect r, SDL_Color c);
 
 #endif // SDL_INCLUDED
 
@@ -191,6 +192,12 @@ void sdl_draw_rect(SDL_Rect r, SDL_Color c)
 {
 	SDL_SetRenderDrawColor(renderer, c.r, c.g, c.b, c.a);
 	SDL_RenderFillRect(renderer, &r);
+}
+
+void sdl_draw_rect_lines(SDL_Rect r, SDL_Color c)
+{
+	SDL_SetRenderDrawColor(renderer, c.r, c.g, c.b, c.a);
+	SDL_RenderDrawRect(renderer, &r);
 }
 
 #endif // SDL_IMPLEMENTATION
