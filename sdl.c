@@ -9,6 +9,7 @@ static bool quit = false;
 static SDL_Color clear_color = (SDL_Color){ 0,0,0,255 };
 static Uint32 mouse_pressed = 0;
 static SDL_Texture* glyphs[0xFF] = { 0 };
+static Uint32 frametime = 0;
 
 int sdl_init(const char* title, int w, int h)
 {
@@ -83,6 +84,11 @@ void sdl_begin_drawing(void)
 void sdl_end_drawing(void)
 {
 	SDL_RenderPresent(renderer);
+
+	static Uint32 framelast = 0;
+	const Uint32 framenow = SDL_GetTicks();
+	frametime = framenow - framelast;
+	framelast = framenow;
 }
 
 void sdl_unload(void)
@@ -147,4 +153,9 @@ void sdl_blit_text(const char* text, int x, int y)
 		x+=w;	
 	}
 	while ( c != '\0' );
+}
+
+float sdl_get_frametime(void)
+{
+	return frametime/1000.0f;
 }
