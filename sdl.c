@@ -129,7 +129,13 @@ void sdl_blit(SDL_Texture* t, int x, int y)
 	SDL_RenderCopy(renderer, t, NULL, &dest);
 }
 
-SDL_Point sdl_get_mouse_pos(void)
+void sdl_blit_rect(SDL_Texture* t, int x, int y, SDL_Rect src)
+{
+	SDL_Rect dest = (SDL_Rect){ x, y, src.w, src.h};
+	SDL_RenderCopy(renderer, t, &src, &dest);
+}
+
+SDL_Point sdl_get_mousepos(void)
 {
 	SDL_Point p = { 0 };
 	SDL_GetMouseState(&p.x, &p.y);
