@@ -147,6 +147,11 @@ bool sdl_is_mouse_pressed(int button)
 	return mouse_pressed & SDL_BUTTON(button);
 }
 
+bool sdl_is_mouse_down(int button)
+{
+	return SDL_GetMouseState() & SDL_BUTTON(button);
+}
+
 void sdl_draw_text(const char* text, int x, int y)
 {
 	int i = 0;
