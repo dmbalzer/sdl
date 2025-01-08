@@ -24,7 +24,6 @@ float sdl_get_frametime(void);
 #endif // SDL_INCLUDED
 
 #if defined(SDL_IMPLEMENTATION)
-#include "sdl.h"
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <stdio.h>
