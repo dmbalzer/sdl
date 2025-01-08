@@ -18,8 +18,9 @@ void sdl_unload_texture(SDL_Texture* t);
 void sdl_blit(SDL_Texture* t, int x, int y);
 SDL_Point sdl_get_mouse_pos(void);
 bool sdl_is_mouse_pressed(int button);
-void sdl_blit_text(const char* text, int x, int y);
+void sdl_draw_text(const char* text, int x, int y);
 float sdl_get_frametime(void);
+void sdl_draw_rect(SDL_Rect r, SDL_Color c);
 
 #endif // SDL_INCLUDED
 
@@ -166,7 +167,7 @@ bool sdl_is_mouse_pressed(int button)
 	return mouse_pressed & SDL_BUTTON(button);
 }
 
-void sdl_blit_text(const char* text, int x, int y)
+void sdl_draw_text(const char* text, int x, int y)
 {
 	int i = 0;
 	char c = 0;
@@ -184,6 +185,12 @@ void sdl_blit_text(const char* text, int x, int y)
 float sdl_get_frametime(void)
 {
 	return frametime/1000.0f;
+}
+
+void sdl_draw_rect(SDL_Rect r, SDL_Color c)
+{
+	SDL_SetRenderDrawColor(renderer, c.r, c.g, c.b, c.a);
+	SDL_RenderFillRect(renderer, &r);
 }
 
 #endif // SDL_IMPLEMENTATION
