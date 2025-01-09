@@ -8,6 +8,7 @@ static SDL_Renderer* renderer = NULL;
 static bool quit = false;
 static SDL_Color clear_color = (SDL_Color){ 0,0,0,255 };
 static Uint32 mouse_pressed = 0;
+static Uint32 mouse_released = 0;
 static SDL_Texture* glyphs[0xFF] = { 0 };
 static Uint32 frametime = 0;
 
@@ -60,12 +61,14 @@ void sdl_process_events(void)
 {
 	SDL_Event event;
 	mouse_pressed = 0;
+	mouse_released = 0;
 	while ( SDL_PollEvent(&event) )
 	{
 		switch ( event.type )
 		{
 			case SDL_QUIT: quit = true; break;
 			case SDL_MOUSEBUTTONDOWN: mouse_pressed |= SDL_BUTTON(event.button.button); break;
+			case SDL_MOUSEBUTTONUP: mouse_released |= SDL_BUTTON(event.button.button); break;
 		}
 	}
 }
@@ -145,6 +148,11 @@ SDL_Point sdl_get_mousepos(void)
 bool sdl_is_mouse_pressed(int button)
 {
 	return mouse_pressed & SDL_BUTTON(button);
+}
+
+bool sdl_is_mouse_released(int button)
+{
+	return mouse_released & SDL_BUTTON(button);
 }
 
 bool sdl_is_mouse_down(int button)

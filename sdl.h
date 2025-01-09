@@ -19,6 +19,7 @@ void sdl_blit(SDL_Texture* t, int x, int y);
 void sdl_blit_rect(SDL_Texture* t, int x, int y, SDL_Rect src);
 SDL_Point sdl_get_mousepos(void);
 bool sdl_is_mouse_pressed(int button);
+bool sdl_is_mouse_released(int button);
 bool sdl_is_mouse_down(int button);
 void sdl_draw_text(const char* text, int x, int y);
 float sdl_get_frametime(void);
